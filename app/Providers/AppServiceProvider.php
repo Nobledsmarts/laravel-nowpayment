@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Http::macro('nowpayment', function() {
+            
+            $apiKey = 'API-KEY-HERE';
+
+            return Http::withHeaders([
+                'x-api-key' => $apiKey,
+                'Content-Type' => 'application/json',
+            ])
+            ->baseUrl('https://api.nowpayments.io/v1');
+        });
     }
 }
